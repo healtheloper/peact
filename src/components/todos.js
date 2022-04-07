@@ -1,5 +1,10 @@
-const Todos = ({ todos }) => {
-  return `<ul>${todos.map((todo) => `<li>${todo} 번</li>`).join("")}</ul>`;
+import Todo from "./todo.js";
+
+const Todos = ({ todos, onDelete }) => {
+  return `
+    <ul>
+      ${todos.map((todo) => Todo({ todo, onDelete })).join("")}
+    </ul>`;
 };
 
 export default Todos;

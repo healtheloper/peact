@@ -22,12 +22,11 @@ const peact = (function () {
     const isUpdate = watchStates.some((wValue) => {
       return wValue === info.state[info.updatedStateKey];
     });
-    if (!info.isMounted) {
-      info.isMounted = true;
-      callback();
-    }
-    if (isUpdate) {
-      callback();
+    const isMounted = !(info.updatedStateKey === null);
+    if (isUpdate || !isMounted) {
+      setTimeout(() => {
+        callback();
+      }, 0);
     }
   };
 
@@ -39,9 +38,11 @@ const peact = (function () {
     }
     const value = info.state[currentStateKey];
     const setValue = (newValue) => {
-      info.state[currentStateKey] = newValue;
-      info.updatedStateKey = currentStateKey;
-      render();
+      setTimeout(() => {
+        info.state[currentStateKey] = newValue;
+        info.updatedStateKey = currentStateKey;
+        render();
+      }, 0);
     };
     info.currentStateKey += 1;
     return [value, setValue];
