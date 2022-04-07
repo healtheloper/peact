@@ -1,17 +1,12 @@
 import peact from "./peact.js";
 import Todos from "./components/todos.js";
 import Button from "./components/button.js";
-import { request } from "./request.js";
 
 const App = () => {
   const [name, setName] = peact.useState("파크");
   const [todos, setTodos] = peact.useState([]);
-  const handleAddBtn = () => {
-    // setRenderFlag(!renderFlag);
-  };
 
   const handleDeleteBtn = (todoId) => {
-    console.log(todoId);
     const newTodos = todos.filter((todo) => todo.id !== todoId);
     setTodos(newTodos);
   };
@@ -22,14 +17,7 @@ const App = () => {
   };
 
   peact.useEffect(() => {
-    console.log("마운트 혹은 업데이트");
     const fetchData = async () => {
-      // const newTodos = await request({
-      //   url: "",
-      //   options: {
-      //     method: "GET",
-      //   },
-      // });
       const newTodos = [
         {
           id: 1,
@@ -48,7 +36,7 @@ const App = () => {
     };
     fetchData();
   }, []);
-  console.log("렌더", todos);
+
   return `
     <h1>${name}</h1>
     ${Todos({ todos, onDelete: handleDeleteBtn })}
